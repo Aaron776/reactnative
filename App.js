@@ -1,22 +1,19 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import Contador from "./src/contador";
+import {StyleSheet, View, Platform, StatusBar} from 'react-native';
+import ImageComponent from "./src/image";
+import List from "./src/List";
 
 export default function App() {
     return (
 
-
-        <Contador cont={10}></Contador>
-
+        <List style={styles.container}></List>
+    
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
 
 });
