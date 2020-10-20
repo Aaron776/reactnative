@@ -5,7 +5,10 @@ import Contador from "./src/contador";
 
 export default function App() {
     return (
-        <Contador></Contador>
+
+
+        <Contador cont={10}></Contador>
+
     );
 }
 

@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View,Button} from "react-native";
 
-export default function Contador() {
-    const [number, setNumber] = useState(10);
+export default function Contador(props) {
+
+    const [number, setNumber] = useState(props.cont);
     function substract(){
         setNumber(number-1);
     }
