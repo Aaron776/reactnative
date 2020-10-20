@@ -1,18 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
+import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Principal from "./src/principal";
+import {StyleSheet, Text, View} from 'react-native';
+import Contador from "./src/contador";
+
 export default function App() {
-  return (
-      <Principal></Principal>
-  );
+    return (
+        <Contador></Contador>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
