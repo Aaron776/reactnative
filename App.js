@@ -1,4 +1,3 @@
-import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Contador from "./src/contador";
@@ -19,4 +18,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
 });
