@@ -1,12 +1,10 @@
 import React , {useState} from 'react';
 import {StyleSheet, View, Platform, StatusBar} from 'react-native';
-import ImageComponent from "./src/components/image";
-import List from "./src/principal/login";
+import ListPage from "./src/Lista/lista";
 
 export default function App() {
     return (
-
-        <List style={styles.container}></List>
+        <ListPage style={styles.container}></ListPage>
     
     );
 }
