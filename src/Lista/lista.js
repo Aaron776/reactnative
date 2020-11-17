@@ -1,14 +1,19 @@
 import React from 'react';
-import {View} from "react-native";
-import { ListItem, Avatar } from 'react-native-elements'
+import {View, FlatList, StyleSheet, Platform, StatusBar} from "react-native";
+import {ListItem, Avatar} from 'react-native-elements'
 import ItemList from '../components/Item'
+
 const list = [
     {
+
+        id: "1",
         name: 'Amy Farha',
         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
         subtitle: 'Vice President'
     },
     {
+
+        id: "2",
         name: 'Chris Jackson',
         avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
         subtitle: 'Vice Chairman'
@@ -40,16 +45,24 @@ const information = [
 
 export default function ListPage() {
     return (
-        <View>
+        <View style={styles.container}>
+
+            <FlatList
+                data={information}
+                keyExtractor={item => item.id}
+                renderItem={({item}) => (
+                    <ItemList element={item}/>
+                )}
+            />
             {
                 list.map((user, i) => (
                     <ListItem key={i} bottomDivider>
                         <Avatar source={{uri: user.avatar_url}} />
-                        <ListItem.Content>
+                        <ListItem.Content style={styles.item}>
                             <ListItem.Title>{user.name}</ListItem.Title>
                             <ListItem.Subtitle>{user.subtitle}</ListItem.Subtitle>
                         </ListItem.Content>
-                        <ListItem.Chevron />
+                        <ListItem.Chevron/>
                     </ListItem>
                 ))
             }
@@ -59,6 +72,19 @@ export default function ListPage() {
                     <ItemList element={item}/>
                 ))
             }
+
+
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+
+    container: {
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+    },
+    item:{
+        backgroundColor:'#f9c2ff'
+    }
+
+})

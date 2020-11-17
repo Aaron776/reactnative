@@ -1,10 +1,11 @@
 import React , {useState} from 'react';
 import {StyleSheet, View, Platform, StatusBar} from 'react-native';
 import ListPage from "./src/Lista/lista";
+import Login from "./src/principal/login";
 
 export default function App() {
     return (
-        <ListPage style={styles.container}></ListPage>
+        <Login style={styles.container}></Login>
     
     );
 }
