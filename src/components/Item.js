@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View,  Text, Image} from "react-native";
-
+import {StyleSheet, View, Text, Image, Dimensions} from "react-native";
+const { width: screenWidth } = Dimensions.get('window')
 export default function ItemList(props) {
     return (
         <View style={styles.item}>
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
         padding: 20,
         marginVertical:8,
         marginHorizontal:5,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        width: screenWidth-10
     },
     containerImage:{
         flex:1,

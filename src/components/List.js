@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, FlatList} from "react-native";
-import ItemList from './Item'
+import ItemList from './Item';
 const information = [
     {
         id: "1",
@@ -28,7 +28,7 @@ const information = [
 export default function List() {
 
     return (
-        <View style={styles.container}>
+        <View >
             <FlatList
                 data={information}
                 renderItem={({item}) => <ItemList element={item}/>}
@@ -38,9 +38,5 @@ export default function List() {
 
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop:20
 
-    }
 })
