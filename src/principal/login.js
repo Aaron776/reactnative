@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, SafeAreaView, Text, Dimensions, Platform, StatusBar} from 'react-native';
 import {Input} from 'react-native-elements';
+import List from "../components/List";
+import ImageCarousel from "../components/imageCarousel";
 
 const {height, width} = Dimensions.get('window');
 export default function Login() {
@@ -8,7 +10,10 @@ export default function Login() {
     const [password, setPassword] = useState("------");
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+
+            <ImageCarousel/>
+
 
             <Text>Home Screen</Text>
             <View style={styles.textInput}>
@@ -26,17 +31,18 @@ export default function Login() {
             </View>
 
             <View style={styles.textInput}>
-                <TouchableOpacity style={styles.openButton}><Text style={{textAlign:"center"}}>Login</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.openButton}><Text
+                    style={{textAlign: "center"}}>Login</Text></TouchableOpacity>
             </View>
 
-        </View>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     openButton: {
         backgroundColor: "#F194FF",
