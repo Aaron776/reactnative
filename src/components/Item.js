@@ -1,24 +1,36 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image, Dimensions} from "react-native";
-const { width: screenWidth } = Dimensions.get('window')
+import {StyleSheet, View, Text, Image, Dimensions, TouchableOpacity} from "react-native";
+
+const {width: screenWidth} = Dimensions.get('window')
 export default function ItemList(props) {
     return (
-        <View style={styles.item}>
-            <View style={styles.containerImage}>
-                <Image style={styles.image} source={{uri:props.element.photo}}/>
-            </View>
-            <View style={styles.containerInfo}>
-                <View>
-                    <Text>
-                        {props.element.id}
-                    </Text>
+        <View>
+            <TouchableOpacity
+                onPress={() => {
+                    props.navigation.navigate('item',
+                        {
+                            texto: props.element
+                        }
+                    )
+                }}
+
+                style={styles.item}>
+                <View style={styles.containerImage}>
+                    <Image style={styles.image} source={{uri: props.element.photo}}/>
                 </View>
-                <View>
-                    <Text>
-                        {props.element.name}
-                    </Text>
+                <View style={styles.containerInfo}>
+                    <View>
+                        <Text>
+                            {props.element.id}
+                        </Text>
+                    </View>
+                    <View>
+                        <Text>
+                            {props.element.name}
+                        </Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -26,23 +38,23 @@ export default function ItemList(props) {
 const styles = StyleSheet.create({
 
     item: {
-        backgroundColor:'#f9c2ff',
+        backgroundColor: '#f9c2ff',
         padding: 20,
-        marginVertical:8,
-        marginHorizontal:5,
+        marginVertical: 8,
+        marginHorizontal: 5,
         flexDirection: 'row',
-        width: screenWidth-10
+        width: screenWidth - 10
     },
-    containerImage:{
-        flex:1,
-        margin:10
+    containerImage: {
+        flex: 1,
+        margin: 10
     },
-    image:{
-        width:30,
-        height:30
+    image: {
+        width: 30,
+        height: 30
     },
-    containerInfo:{
-        flex:5,
+    containerInfo: {
+        flex: 5,
         margin: 10
     }
 
