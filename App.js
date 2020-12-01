@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 
-import TabNavigationScreens from "./src/screens/Tabs";
+import IndexAppScreen from './src/screens/indexnavigations'
 
 
 export default function App() {
     return (
-        <TabNavigationScreens/>
+        <IndexAppScreen/>
 
 
     );

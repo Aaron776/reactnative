@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavigationContainer} from "@react-navigation/native";
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import ImageCarousel from "../components/imageCarousel";
 import ImageComponent from "../components/image";

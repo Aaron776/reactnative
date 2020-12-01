@@ -1,18 +1,16 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, SafeAreaView, Text, Dimensions, Platform, StatusBar} from 'react-native';
 import {Input} from 'react-native-elements';
-import List from "../components/List";
-import ImageCarousel from "../components/imageCarousel";
+import ContextNavigation from "../screens/context";
 
 const {height, width} = Dimensions.get('window');
 export default function Login() {
     const [user, setUser] = useState("-------");
     const [password, setPassword] = useState("------");
+    const {login} = React.useContext(ContextNavigation);
 
     return (
         <SafeAreaView style={styles.container}>
-
-            <ImageCarousel/>
 
 
             <Text>Home Screen</Text>
@@ -31,7 +29,7 @@ export default function Login() {
             </View>
 
             <View style={styles.textInput}>
-                <TouchableOpacity style={styles.openButton}><Text
+                <TouchableOpacity style={styles.openButton} onPress={login}><Text
                     style={{textAlign: "center"}}>Login</Text></TouchableOpacity>
             </View>
 
