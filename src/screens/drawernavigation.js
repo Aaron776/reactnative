@@ -9,13 +9,11 @@ const Drawer = createDrawerNavigator();
 
 export default function DrawerScreen() {
     return (
-        <NavigationContainer>
-            <Drawer.Navigator>
-                <Drawer.Screen name="principal" component={ImageCarousel}/>
-                <Drawer.Screen name="secundaria" component={ImageComponent}/>
 
+        <Drawer.Navigator>
+            <Drawer.Screen name="principal" component={ImageCarousel}/>
+            <Drawer.Screen name="secundaria" component={ImageComponent}/>
+        </Drawer.Navigator>
 
-            </Drawer.Navigator>
-        </NavigationContainer>
     )
 }
