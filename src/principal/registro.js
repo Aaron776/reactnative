@@ -1,34 +1,29 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, SafeAreaView, Text, Dimensions, Platform, StatusBar } from 'react-native';
 import { Input } from 'react-native-elements';
-import ContextNavigation from "../screens/context";
 import firebase from "../firebase/firebase";
 import "firebase/firestore";
-const { height, width } = Dimensions.get('window');
-export default function Login({ navigation }) {
+export default function Registro({navigation}) {
     const [user, setUser] = useState("-------");
     const [password, setPassword] = useState("------");
-    const { login } = React.useContext(ContextNavigation);
     const users = firebase.firestore().collection('user');
-    function ingresar() {
-        users.where('userUsuario', '==', user).get()
-            .then((snapshot) => {
-                snapshot.forEach((doc) => {
-                    if (doc.data().passwordUsuario == password) {
-                        console.log(doc.id);
-                        login()
-                    }
-                })
-            }).catch((err) => {
-                console.log('Error getting documents', err);
-            })
+
+    function registro() {
+        let usuario = {
+            userUsuario: user,
+            passwordUsuario: password
+        }
+        users.doc().set(usuario);
+        navigation.navigate('login')
+
     }
+
 
     return (
         <SafeAreaView style={styles.container}>
 
 
-            <Text>Home Screen</Text>
+            <Text>Registro Screen</Text>
             <View style={styles.textInput}>
                 <Input
                     placeholder='User'
@@ -39,16 +34,11 @@ export default function Login({ navigation }) {
                 <Input
                     placeholder='Password'
                     secureTextEntry={true}
-
                     onChangeText={returnOnChangeText => setPassword(returnOnChangeText)} />
             </View>
 
             <View style={styles.textInput}>
-                <TouchableOpacity style={styles.openButton} onPress={() => { navigation.navigate('registro') }}><Text
-                    style={{ textAlign: "center" }}>Registro</Text></TouchableOpacity>
-            </View>
-            <View style={styles.textInput}>
-                <TouchableOpacity style={styles.openButton} onPress={ingresar}><Text
+                <TouchableOpacity style={styles.openButton} onPress={registro}><Text
                     style={{ textAlign: "center" }}>Login</Text></TouchableOpacity>
             </View>
 
