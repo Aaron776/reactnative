@@ -9,7 +9,7 @@ export default function ItemList(props) {
                 onPress={() => {
                     props.navigation.navigate('item',
                         {
-                            texto: props.element
+                            id: props.element.id
                         }
                     )
                 }}

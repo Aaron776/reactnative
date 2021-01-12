@@ -1,77 +1,67 @@
-import React from 'react';
-import {View, FlatList, StyleSheet, Platform, StatusBar, SafeAreaView, ScrollView} from "react-native";
-import {ListItem, Avatar} from 'react-native-elements'
+import React, {useEffect, useState} from 'react';
+import {
+    View,
+    FlatList,
+    StyleSheet,
+    Platform,
+    StatusBar,
+    SafeAreaView,
+    ScrollView,
+    ActivityIndicator
+} from "react-native";
 import ItemList from '../components/Item'
+import firebase from "../firebase/firebase";
+import "firebase/firestore";
 
-const list = [
-    {
-
-        id: "1",
-        name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-
-        id: "2",
-        name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    }
-]
-
-const information = [
-    {
-        id: "1",
-        name: "reacjs",
-        photo: "https://s3-us-west-2.amazonaws.com/devcodepro/media/blog/como-funciona-reactjs.png"
-    },
-    {
-        id: "2",
-        name: "react native",
-        photo: "https://s3-us-west-2.amazonaws.com/devcodepro/media/blog/como-funciona-reactjs.png"
-    },
-    {
-        id: "3",
-        name: "angular",
-        photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/250px-Angular_full_color_logo.svg.png"
-    },
-    {
-        id: "4",
-        name: "angularjs",
-        photo: 'https://cdn.slidesharecdn.com/ss_thumbnails/angularjs-161213223326-thumbnail-4.jpg'
-    },
-    {
-        id: "5",
-        name: "angularjs",
-        photo: 'https://cdn.slidesharecdn.com/ss_thumbnails/angularjs-161213223326-thumbnail-4.jpg'
-    },
-    {
-        id: "6",
-        name: "angularjs",
-        photo: 'https://cdn.slidesharecdn.com/ss_thumbnails/angularjs-161213223326-thumbnail-4.jpg'
-    },
-    {
-        id: "7",
-        name: "angularjs",
-        photo: 'https://cdn.slidesharecdn.com/ss_thumbnails/angularjs-161213223326-thumbnail-4.jpg'
-    }
-
-];
 
 export default function ListPage({navigation}) {
+    const framework = firebase.firestore().collection('framework');
+    const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+    const synch = () => {
+        let frameworks = [];
+        framework.get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+                    let frameworkFromFirebase = {
+                        id: doc.id,
+                        name: doc.data().name,
+                        photo: doc.data().photo
+                    }
+                    frameworks.push(frameworkFromFirebase)
+                }
+            )
+            setData(frameworks);
+        }).finally(() => setLoading(false));
+    }
+
+    useEffect(() => {
+        let isMounted = true;
+        synch();
+        return () => {
+            isMounted = false
+        }
+    })
+
     return (
-        <SafeAreaView style={styles.container}>
+        <View>
+            {
+                isLoading ? (<ActivityIndicator/>)
+                    : (
+                        <SafeAreaView style={styles.container}>
 
-            <FlatList
-                data={information}
-                keyExtractor={item => item.id}
-                renderItem={({item}) => (
-                    <ItemList element={item} navigation={navigation}/>
-                )}
-            />
+                            <FlatList
+                                data={data}
+                                keyExtractor={item => item.id}
+                                renderItem={({item}) => (
+                                    <ItemList element={item} navigation={navigation}/>
+                                )}
+                            />
 
-        </SafeAreaView>
+                        </SafeAreaView>
+                    )
+            }
+        </View>
+
     )
 }
 
