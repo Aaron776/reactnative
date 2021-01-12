@@ -18,20 +18,20 @@ export default function ListPage({navigation}) {
     const framework = firebase.firestore().collection('framework');
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    let uri = 'http://rafaelfalconi.biz:8080/angular/news'
     const synch = () => {
-        let frameworks = [];
-        framework.get().then((snapshot) => {
-            snapshot.forEach((doc) => {
-                    let frameworkFromFirebase = {
-                        id: doc.id,
-                        name: doc.data().name,
-                        photo: doc.data().photo
-                    }
-                    frameworks.push(frameworkFromFirebase)
+        fetch(uri, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE2MTA0Njg1OTAsImlzcyI6InJhZmFlbCIsIm5hbWUiOiJzdHJpbmciLCJleHAiOjE2MTA0NzIxOTAsImlhdCI6MTYxMDQ2ODU5MH0.1_W_h4RoXSjMr7jHtUF70togs6_vKUZ9coruiVYijx8'
                 }
-            )
-            setData(frameworks);
-        }).finally(() => setLoading(false));
+            }
+        ).then((response)=>response.json())
+            .then((response)=>setData(response))
+            .catch((error)=>console.log(error))
+            .finally(()=>setLoading(false));
     }
 
     useEffect(() => {

@@ -12,34 +12,44 @@ import {
 } from 'react-native';
 import {Input} from 'react-native-elements';
 import ContextNavigation from "../screens/context";
-import firebase from "../firebase/firebase";
-import "firebase/firestore";
 
 export default function Login({navigation}) {
     const [user, setUser] = useState("-------");
     const [password, setPassword] = useState("------");
     const {login} = React.useContext(ContextNavigation);
-    const users = firebase.firestore().collection('user');
     const [modalVisible, setModalVisible] = useState(false);
 
     function ingresar() {
-        users.where('userUsuario', '==', user).get()
-            .then((snapshot) => {
-                snapshot.forEach((doc) => {
-                    if (doc.data().passwordUsuario == password) {
-                        console.log(doc.id);
+        let userJson={
+            id: "",
+            name: user,
+            password: password
+        }
+        try {
+            fetch('http://rafaelfalconi.biz:8080/angular/auth/sigin', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userJson)
+            }).then((response) => response.json())
+                .then((response) => {
+                    if (response.error === undefined) {
                         login()
+                    } else {
+                        console.log(response);
+                        setModalVisible(true);
                     }
-                    setModalVisible(true);
-
                 })
-            }).catch((err) => {
+
+        } catch (error) {
             setModalVisible(true);
-        })
+        }
     }
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
 
             <Modal
                 animationType="fade"
@@ -54,7 +64,7 @@ export default function Login({navigation}) {
                         <Text style={styles.modalText}>Datos incorrectos</Text>
 
                         <TouchableHighlight
-                            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                            style={{...styles.openButton, backgroundColor: "#2196F3"}}
                             onPress={() => {
                                 setModalVisible(!modalVisible);
                             }}

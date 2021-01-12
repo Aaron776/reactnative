@@ -26,7 +26,7 @@ export default function ItemList(props) {
                     </View>
                     <View>
                         <Text>
-                            {props.element.name}
+                            {props.element.title}
                         </Text>
                     </View>
                 </View>

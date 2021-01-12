@@ -4,25 +4,26 @@ import {useRoute} from '@react-navigation/native';
 
 const {width: screenWidth} = Dimensions.get('window')
 const {height: screenHeight} = Dimensions.get('window')
-import firebase from "../firebase/firebase";
-import "firebase/firestore";
 
 export default function Item() {
-    const framework = firebase.firestore().collection('framework');
     const [item, setItem] = useState({});
     const [isLoading, setLoading] = useState(true);
     let route = useRoute();
     let id = route.params.id;
+    let uri = 'http://rafaelfalconi.biz:8080/angular/news/' + id;
     const synch = () => {
-        framework.doc(id).get().then((snapshot) => {
-
-            let frameworkFromFirebase = {
-                id: snapshot.id,
-                name: snapshot.data().name,
-                photo: snapshot.data().photo
+        fetch(uri, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE2MTA0Njg1OTAsImlzcyI6InJhZmFlbCIsIm5hbWUiOiJzdHJpbmciLCJleHAiOjE2MTA0NzIxOTAsImlhdCI6MTYxMDQ2ODU5MH0.1_W_h4RoXSjMr7jHtUF70togs6_vKUZ9coruiVYijx8'
+                }
             }
-            setItem(frameworkFromFirebase);
-        }).finally(() => setLoading(false));
+        ).then((response) => response.json())
+            .then((response) => setItem(response))
+            .catch((error) => console.log(error))
+            .finally(() => setLoading(false));
     }
     useEffect(() => {
         let isMounted = true;
